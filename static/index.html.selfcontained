@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang = "en">
+   <head>
+      <meta charset = "utf-8">
+      <title>jQuery UI Autocomplete functionality</title>
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      <style>
+         #project-label {
+            display: block;
+            /*font-weight: bold;*/
+            margin-bottom: 1em;
+         }
+         #project-icon {
+            float: left;
+            height: 32px;
+            width: 32px;
+         }
+         #project-description {
+            display: block;
+            font-weight: bold;
+            margin: 30;
+            padding: 10;
+         }
+      </style>
+      
+      <!-- Javascript -->
+      <script>
+         $(function() {
+            var projects = [
+               {
+                  value: "java",
+                  label: "Java",
+                  url: "http://www.google.com",
+               },
+               {
+                  value: "jquery-ui",
+                  label: "jQuery UI",
+                  url: "the official user interface library for jQuery",
+               },
+               {
+                  value: "Bootstrap",
+                  label: "Twitter Bootstrap",
+                  url: "popular front end frameworks ",
+               }
+            ];
+            $( "#project" ).autocomplete({
+               minLength: 0,
+               source: projects,
+               focus: function( event, ui ) {
+                  $( "#project" ).val( ui.item.label );
+                     return false;
+               },
+               select: function( event, ui ) {
+                  $( "#project" ).val( ui.item.label );
+                  $( "#project-id" ).val( ui.item.value );
+                  $( "#results" ).html( "Product page:" );
+                  $( "#project-description" ).html( ui.item.value );
+                  $( "#project-description" ).attr("href", ui.item.url);
+                  return false;
+               }
+            })
+				
+            .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+               return $( "<li>" )
+               .append( "<a>" + item.label + "<br></a>" )
+               .appendTo( ul );
+            };
+         });
+      </script>
+   </head>
+   
+   <body>
+      <div id = "project-label">Product Search:</div>
+      <input id = "project">
+      <input type = "hidden" id = "project-id">
+      <p id = "results"></p>
+      <p><a id = "project-description"></a></p>
+      <!--<p><a id = "project-description" style="text-decoration: none"></a></p>-->
+   </body>
+</html>

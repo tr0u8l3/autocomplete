@@ -1,0 +1,49 @@
+service: autocomplete
+runtime: php55
+api_version: 1
+
+handlers:
+
+- url: /
+  static_files: static/index.html
+  upload: static/index.html
+
+- url: /index\.html
+  static_files: static/index.html
+  upload: static/index.html
+
+- url: /search.php
+  script: search.php
+
+#- url: /index\.html\.remote
+#  static_files: static/index.html.remote
+#  upload: static/index.html.remote
+
+#- url: /index\.html\.example
+#  static_files: static/index.html.example
+#  upload: static/index.html.example
+
+#- url: /index\.html\.selfcontained
+#  static_files: static/index.html.selfcontained
+#  upload: static/index.html.selfcontained
+
+- url: /static
+  static_dir: static
+
+- url: /favicon\.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon\.ico
+
+- url: /(.*\.(ico|gif|png|jpg))$
+  static_files: static/\1
+  upload: static/.*\.(ico|gif|png|jpg)$
+
+- url: /.*
+  script: not_found.php
+
+env_variables:
+  MYSQL_DSN: mysql:unix_socket=/cloudsql/cp100-brysondemo:us-west1:products;dbname=catalog
+  MYSQL_USER: root
+  MYSQL_PASSWORD: 'brysondemo7041'
+  MYSQL_SERVER: mysql:unix_socket=/cloudsql/cp100-brysondemo:us-west1:products
+  MYSQL_DATABASE: catalog
